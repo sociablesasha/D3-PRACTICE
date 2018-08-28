@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <script src="http://d3js.org/d3.v3.js"></script>
+</head>
+
+<body>
+    <script>
+        
+        var width = 700,
+            height = 700;
+
+        var data = [[100, 100], [200, 100], [300, 400], [550, 90], [650, 650]];
+
+        var svg = d3.select("body").append("svg")
+            .attr({
+                width, height
+            })
+            .style("border", "1px solid black");
+
+        var circles = d3.select("svg").selectAll("circle")
+            .data(data)
+            .enter()
+            .append("circle")
+            .attr({
+                "cx": (d) => {
+                    return d[0];
+                },
+                "cy": (d) => {
+                    return d[1];
+                },
+                "fill": "black",
+                "r": 10
+            })
+            .on("mousedown", mousedown)
+            .on("mouseup", mouseup);
+
+        var down, up, line;
+
+        function mousedown(d) {
+            down = d;
+        }
+
+        function mouseup(d) {
+            up = d;
+
+            createline();
+        }
+
+        function createline() {
+            if (down != up) {
+                svg.append("line")
+                    .attr({
+                        "x1": down[0],
+                        "y1": down[1],
+                        "x2": up[0],
+                        "y2": up[1],
+                        "stroke": "black"
+                    })
+            }
+        }
+
+
+    </script>
+</body>
+
+</html>

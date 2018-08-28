@@ -1,0 +1,95 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <script src="http://d3js.org/d3.v3.js"></script>
+</head>
+
+<body>
+
+    <script>
+
+        // Defined Value
+        var width = 1000,
+            height = 800;
+
+        var dataset = [
+            { x: 200, y: 110 },
+            { x: 33, y: 423 },
+            { x: 212, y: 218 },
+            { x: 449, y: 714 },
+            { x: 511, y: 120 },
+            { x: 235, y: 148 },
+            { x: 757, y: 360 },
+            { x: 120, y: 755 },
+            { x: 311, y: 683 },
+            { x: 654, y: 575 },
+            { x: 44, y: 110 },
+            { x: 835, y: 100 },
+            { x: 620, y: 740 },
+            { x: 790, y: 680 },
+            { x: 910, y: 420 },
+            { x: 40, y: 250 },
+            { x: 225, y: 311 }
+        ];
+        
+        // Define Attrs
+        var gAttrs = {
+            transform: function (d) {
+                return "translate(" + d.x + "," + d.y + ")";
+            }
+        };
+
+        var imageAttrs = {
+            width: 30,
+            height: 30,
+            x: -15,
+            y: -15,
+            href: "https://image.flaticon.com/icons/svg/1/1827.svg"
+        }
+
+
+        // SVG
+        var svg = d3.select("body").
+            append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .style("border", "1px solid black");
+
+        // Append First
+        svg.selectAll("g")
+            .data(dataset)
+            .enter()
+            .append("g")
+            .attr(gAttrs)
+            .append("image")
+            .attr(imageAttrs)
+
+
+        // Append Event
+        svg.on("click", function () {
+            var pointer = d3.mouse(this);
+
+            console.log(pointer[0] + "," + pointer[1]);
+
+            var data = {
+                x: pointer[0],
+                y: pointer[1]
+            };
+
+            dataset.push(data);
+
+            svg.selectAll("g")
+                .data(dataset)
+                .enter()
+                .append("g")
+                .attr(gAttrs)
+                .append("image")
+                .attr(imageAttrs)
+
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,414 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    <script src="http://d3js.org/d3.v3.js"></script>
+
+    <style>
+        #topology {
+            width: 550;
+            height: 800;
+            background-image: url("./Topology.png");
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 100% 100%;
+        }
+
+        .node {
+            cursor: move;
+        }
+
+        .link {
+            cursor: move;
+            fill: none;
+            stroke: orange;
+            stroke-opacity: 0.5;
+            stroke-width: 3;
+        }
+    </style>
+</head>
+
+<body>
+    <button id="manage">관리 모드</button>
+    <button id="addResource">장비 추가</button>
+    <button id="removeResource">장비 삭제</button>
+    <button id="addLine">선 추가</button>
+    <button id="removeLine">선 삭제</button>
+    <button id="store">저장</button>
+
+
+    <hr>
+
+    <div id="topology"></div>
+
+    <script>
+
+        // @Defined Value
+        var width = 550,
+            height = 800;
+
+
+        // @Defined Event
+        var drag = null;
+        var clickSVG = null;
+        var clickNode = null;
+        var clickLink = null;
+        var mousedown = null;
+        var mouseup = null;
+
+
+        // @Defined Variable
+        var svg = null;
+        var node = null;
+        var link = null;
+        var nodes = null;
+        var links = null;
+
+
+
+
+        // @Related default setting
+        // @ExcutePoint After loading
+        // @Function defaultSetting
+        function defaultSetting() {
+            // Create SVG
+            svg = d3.select("#topology").append("svg")
+                .attr("width", width)
+                .attr("height", height)
+                .style("border", "1px solid black");
+
+            // Get JSON Object
+            d3.json("./Topology.json", function (error, graph) {
+
+                // Define Node Map
+                var nodeMap = {};
+
+                // Rearrangement
+                graph.nodes.forEach(function (d) { nodeMap[d.id] = d; });
+                graph.links.forEach(function (l) {
+
+                    if (typeof nodeMap[l.target] === 'undefined') {
+                        console.log("l.target undefined id=" + l.target);
+                    }
+                    else {
+                        l.target = nodeMap[l.target];
+                    }
+                    if (typeof nodeMap[l.source] === 'undefined') {
+                        console.log("l.source undefined id=" + l.source);
+                    }
+                    else {
+                        l.source = nodeMap[l.source];
+                    }
+                });
+
+                // Set ArrayList
+                nodes = graph.nodes;
+                links = graph.links;
+
+                drawing("manage");
+            });
+        }
+
+
+
+
+        // @Related mode
+        // @ExcutePoint After Event
+        // @Function button.click => drawing(options)
+        $('#manage').click(function () {
+            alert('관리 모드');
+            drawing("manage");
+        });
+
+        $('#addResource').click(function () {
+            alert('장비 추가');
+            drawing("addResource");
+        });
+
+        $('#removeResource').click(function () {
+            alert('장비 삭제');
+            drawing("removeResource");
+        });
+
+        $('#addLine').click(function () {
+            alert('선 추가');
+            drawing("addLine");
+        });
+
+        $('#removeLine').click(function () {
+            alert('선 삭제');
+            drawing("removeLine");
+        });
+
+        $('#store').click(function () {
+            alert('저장');
+
+            var object = new Object();
+            object["nodes"] = nodes;
+            object["links"] = links;
+            console.log(JSON.stringify(object));
+
+            alert('준비 중입니다. (API not exits.)');
+        });
+
+
+
+
+        // @Related manage
+        // @ExcutePoint After Event Function
+        // @Function Manaing
+        function managing(node) {
+            node.x = Math.max(15, Math.min(width - 15, d3.event.x));
+            node.y = Math.max(15, Math.min(height - 15, d3.event.y));
+
+            d3.select(this)
+                .attr("transform", "translate(" + node.x + "," + node.y + ")");
+
+            svg.selectAll(".link").remove();
+
+            link = svg.selectAll(".link");
+
+            // @FIXED Append -> Insert
+            link
+                .data(links)
+                .enter().append("path")
+                .attr("class", "link")
+                .attr("d", function (d) {
+                    var dx = d.target.x - d.source.x,
+                        dy = d.target.y - d.source.y,
+                        dr = Math.sqrt(dx * dx + dy * dy);
+                    return "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.x + "," + d.target.y;
+                });
+        }
+
+        // @Related addResource
+        // @ExcutePoint After Event Function
+        // @Function addingResource
+        function addingResource() {
+            var node_x = d3.event.x;
+            var node_y = d3.event.y;
+
+            // Input Value
+            var node_name = prompt("node_name");
+            var node_object = prompt("object");
+            var node_icon = prompt("icon");
+            var node_id = Date.now();
+
+            if (node_name == null || node_object == null
+                || node_icon == null || node_id == null
+                || node_x == null || node_y == null) {
+
+                console.log("null");
+                return false;
+            }
+
+            var data = {
+                id: node_id,
+                icon: node_icon,
+                objtype: node_object,
+                name: node_name,
+                x: node_x,
+                y: node_y
+            };
+
+            nodes.push(data);
+
+            node = svg.selectAll(".node");
+
+            node
+                .data(nodes)
+                .enter().append("g")
+                .attr("class", "node")
+                .append("image")
+                .attr("transform", function (d) {
+                    return "translate(" + d.x + "," + d.y + ")";
+                })
+                .attr('x', -(30 / 2))
+                .attr('y', -(30 / 2))
+                .attr('width', 30)
+                .attr('height', 30)
+                .attr("href", function (d) { return d.icon })
+        }
+
+        // @Related removeResource
+        // @ExcutePoint After Event Function
+        // @Function removingResource
+        function removingResource(node) {
+            // Remove Node
+            nodes.splice(nodes.indexOf(node), 1);
+
+            // Remove Link
+            var temps = [];
+            links.forEach(function (link) {
+                if (node.id == link.source.id
+                    || node.id == link.target.id) {
+                    temps.push(link);
+                }
+            });
+
+            temps.forEach(function (temp) {
+                links.splice(links.indexOf(temp), 1);
+            });
+
+            drawing("removeResource");
+        }
+
+        // @Related addLine
+        // @ExcutePoint After Event Function
+        // @Function addingLineDown => Set down
+        // @Function addingLineUp => Set up
+        // @Function addingLine => Create with down, up
+        var down, up;
+
+        function addingLineDown(node) {
+            down = node;
+        }
+
+        function addingLineUp(node) {
+            up = node;
+
+            addingLine();
+        }
+
+        function addingLine() {
+            if (down != up) {
+                var temp = true;
+                links.forEach(function (link) {
+                    if (link.source == down && link.target == up) {
+                        temp = false;
+                    }
+                });
+
+                if (temp) {
+                    var data = {
+                        source: down,
+                        value: 2,
+                        target: up
+                    };
+
+                    links.push(data);
+
+                    drawing("addResource");
+                }
+
+            }
+            down = null;
+            up = null;
+        }
+
+        // @Related removeResource
+        // @ExcutePoint After Event Function
+        // @Function removingResource
+        function removingLink(link) {
+            // Remove Link
+            links.splice(links.indexOf(link), 1);
+
+            drawing("removeLine");
+        }
+
+
+
+
+        // @Related draw
+        // @ExcutePoint Anywhere
+        // @Function Drawing { @Parameter options => add, remove, etc }
+        function drawing(options) {
+            svg.selectAll(".link").remove();
+            svg.selectAll(".node").remove();
+
+            link = svg.selectAll(".link");
+            node = svg.selectAll(".node");
+
+            switch (options) {
+                case "manage":
+                    drag = d3.behavior.drag()
+                        .origin(function (d) { return d; })
+                        .on("drag", managing);
+                    clickSVG = null;
+                    clickNode = null;
+                    clickLink = null;
+                    mousedown = null;
+                    mouseup = null;
+                    break;
+                case "addResource":
+                    drag = d3.behavior.drag()
+                        .origin(function (d) { return d; })
+                        .on("drag", null);
+                    clickSVG = addingResource;
+                    clickNode = null;
+                    clickLink = null;
+                    mousedown = null;
+                    mouseup = null;
+                    break;
+                case "removeResource":
+                    drag = d3.behavior.drag()
+                        .origin(function (d) { return d; })
+                        .on("drag", null);
+                    clickSVG = null;
+                    clickNode = removingResource;
+                    clickLink = null;
+                    mousedown = null;
+                    mouseup = null;
+                    break;
+                case "addLine":
+                    drag = d3.behavior.drag()
+                        .origin(function (d) { return d; })
+                        .on("drag", null);
+                    clickSVG = null;
+                    clickNode = null;
+                    clickLink = null;
+                    mousedown = addingLineDown;
+                    mouseup = addingLineUp;
+                    break;
+                case "removeLine":
+                    drag = d3.behavior.drag()
+                        .origin(function (d) { return d; })
+                        .on("drag", null);
+                    clickSVG = null;
+                    clickNode = null;
+                    clickLink = removingLink;
+                    mousedown = null;
+                    mouseup = null;
+                    break;
+            }
+
+            svg
+                .on("click", clickSVG);
+
+            link
+                .data(links)
+                .enter().append("path")
+                .attr("class", "link")
+                .attr("d", function (d) {
+                    var dx = d.target.x - d.source.x,
+                        dy = d.target.y - d.source.y,
+                        dr = Math.sqrt(dx * dx + dy * dy);
+                    return "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.x + "," + d.target.y;
+                })
+                .on("click", clickLink);
+
+            node
+                .data(nodes)
+                .enter().append("g")
+                .attr("class", "node")
+                .append("image")
+                .attr("transform", function (d) {
+                    return "translate(" + d.x + "," + d.y + ")";
+                })
+                .attr('x', -(30 / 2))
+                .attr('y', -(30 / 2))
+                .attr('width', 30)
+                .attr('height', 30)
+                .attr("href", function (d) { return d.icon })
+                .call(drag)
+                .on("click", clickNode)
+                .on("mousedown", mousedown)
+                .on("mouseup", mouseup);
+        }
+
+        $(document).ready(defaultSetting);
+    </script>
+</body>
+
+</html>

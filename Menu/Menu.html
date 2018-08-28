@@ -1,0 +1,229 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <link href="./ContextMenu.css" rel="stylesheet">
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    <script src="http://d3js.org/d3.v3.js"></script>
+    <script src="./ContextMenu.js"></script>
+
+    <style>
+        #topology {
+            width: 550;
+            height: 800;
+            background-image: url("./Topology.png");
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 100% 100%;
+        }
+
+        .node {
+            cursor: move;
+        }
+
+        .link {
+            cursor: move;
+            fill: none;
+            stroke: orange;
+            stroke-opacity: 0.5;
+            stroke-width: 3;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="topology">
+        <svg class="svg" width="550" height="800" style="border: 1px solid black;">
+            <path class="link" d="M70,228A149.40214188558343,149.40214188558343 0 0,1 106,373"></path>
+            <g class="node">
+                <image transform="translate(200,373)" x="-15" y="-15" width="30" height="30" href="https://image.flaticon.com/icons/svg/60/60740.svg"></image>
+            </g>
+        </svg>
+
+    </div>
+
+    <script>
+
+        // disabled: function (data, index) {
+        //     return true;
+        // },
+
+        var menu_svg = [
+            {
+                title: 'MAP',
+            },
+            {
+                divider: true
+            },
+            {
+                title: '새로운 맵 생성...',
+
+                action: function (data, index) {
+                    console.log('Item clicked', 'element:', this, 'data:', data, 'index:', index);
+                }
+            },
+            {
+                title: '새로운 서브맵 생성...',
+
+                action: function (data, index) {
+                    console.log('Item clicked', 'element:', this, 'data:', data, 'index:', index);
+                }
+            },
+            {
+                title: '맵 수정...',
+                action: function (data, index) {
+                    console.log('Item clicked', 'element:', this, 'data:', data, 'index:', index);
+                }
+            },
+            {
+                title: '맵 삭제...',
+                action: function (data, index) {
+                    console.log('Item clicked', 'element:', this, 'data:', data, 'index:', index);
+                }
+            },
+            {
+                title: '맵 저장...',
+                action: function (data, index) {
+                    console.log('Item clicked', 'element:', this, 'data:', data, 'index:', index);
+                }
+            },
+            {
+                divider: true
+            },
+            {
+                title: '자원 전체 삭제...',
+                action: function (data, index) {
+                    console.log('Item clicked', 'element:', this, 'data:', data, 'index:', index);
+                }
+            },
+            {
+                title: '연결 전체 삭제...',
+                action: function (data, index) {
+                    console.log('Item clicked', 'element:', this, 'data:', data, 'index:', index);
+                }
+            }
+        ];
+
+        var menu_node = [
+            {
+                title: 'Resource',
+            },
+            {
+                divider: true
+            },
+            {
+                title: '새로운 자원 추가...',
+
+                action: function (data, index) {
+                    console.log('Item clicked', 'element:', this, 'data:', data, 'index:', index);
+                }
+            },
+            {
+                title: '자원 수정...',
+                action: function (data, index) {
+                    console.log('Item clicked', 'element:', this, 'data:', data, 'index:', index);
+                }
+            },
+            {
+                title: '자원 삭제...',
+                action: function (data, index) {
+                    console.log('Item clicked', 'element:', this, 'data:', data, 'index:', index);
+                }
+            },
+            {
+                title: '자원 전체 삭제...',
+                action: function (data, index) {
+                    console.log('Item clicked', 'element:', this, 'data:', data, 'index:', index);
+                }
+            },
+            {
+                divider: true
+            },
+            {
+                title: '새로운 연결 추가...',
+                action: function (data, index) {
+                    console.log('Item clicked', 'element:', this, 'data:', data, 'index:', index);
+                }
+            },
+            {
+                title: '연결 삭제...',
+                action: function (data, index) {
+                    console.log('Item clicked', 'element:', this, 'data:', data, 'index:', index);
+                }
+            },
+            {
+                title: '연결 전체 삭제...',
+                action: function (data, index) {
+                    console.log('Item clicked', 'element:', this, 'data:', data, 'index:', index);
+                }
+            }
+        ];
+
+        var menu_link = [
+            {
+                title: 'Link',
+            },
+            {
+                divider: true
+            },
+            {
+                title: '새로운 연결 추가...',
+
+                action: function (data, index) {
+                    console.log('Item clicked', 'element:', this, 'data:', data, 'index:', index);
+                }
+            },
+            {
+                title: '연결 삭제...',
+                action: function (data, index) {
+                    console.log('Item clicked', 'element:', this, 'data:', data, 'index:', index);
+                }
+            },
+            {
+                title: '연결 전체 삭제...',
+                action: function (data, index) {
+                    console.log('Item clicked', 'element:', this, 'data:', data, 'index:', index);
+                }
+            }
+        ];
+
+        var svg = d3.selectAll('.svg');
+        var node = d3.selectAll('.node');
+        var link = d3.selectAll('.link');
+
+        svg
+            .on('contextmenu', d3.contextMenu(menu_svg, {
+                onOpen: function (data, index) {
+                    console.log('Menu Opened!', 'element:', this, 'data:', data, 'index:', index);
+                },
+                onClose: function (data, index) {
+                    console.log('Menu Closed!', 'element:', this, 'data:', data, 'index:', index);
+                }
+            }));
+
+        node
+            .on('contextmenu', d3.contextMenu(menu_node, {
+                onOpen: function (data, index) {
+                    console.log('Menu Opened!', 'element:', this, 'data:', data, 'index:', index);
+                },
+                onClose: function (data, index) {
+                    console.log('Menu Closed!', 'element:', this, 'data:', data, 'index:', index);
+                }
+            }));
+
+        link
+            .on('contextmenu', d3.contextMenu(menu_link, {
+                onOpen: function (data, index) {
+                    console.log('Menu Opened!', 'element:', this, 'data:', data, 'index:', index);
+                },
+                onClose: function (data, index) {
+                    console.log('Menu Closed!', 'element:', this, 'data:', data, 'index:', index);
+                }
+            }));
+
+    </script>
+</body>
+
+</html>

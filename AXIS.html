@@ -1,0 +1,180 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <script src="http://d3js.org/d3.v3.js"></script>
+</head>
+
+<body>
+
+    <script>
+        var width = 500,
+            height = 600,
+            padding = 50;
+
+        var dataset = [100, 20, 30, 40, 70, 50, 90, 60, 80, 10, 20, 20, 20];
+        var tempdata = dataset.slice();
+
+        // Max, Min
+        var max = tempdata.reduce(function (previous, current) {
+            return previous > current ? previous : current;
+        });
+
+        var min = tempdata.reduce(function (previous, current) {
+            return previous > current ? current : previous;
+        });
+
+
+        var svg = d3.select("body").
+            append("svg")
+            .attr("width", width)
+            .attr("height", height);
+
+        var scale = d3.scale.linear()
+            .domain([0, 100])
+            .range([padding, height - padding]);
+
+        var l_scale = d3.scale.linear()
+            .domain([100, 0])
+            .range([padding, height - padding]);
+
+        var axis = d3.svg.axis()
+            .orient("left")
+            .scale(l_scale);
+
+        svg.append("g")
+            .attr("transform", "translate(" + padding + ",0)")
+            .call(axis);
+
+        svg.selectAll()
+            .data(tempdata)
+            .enter()
+            .append("rect")
+            .attr("width", function (d, i) { return (width - padding) / dataset.length - ((width - padding) / dataset.length / 10); })
+            .attr("height", function (d) { return scale(d) - padding; })
+            .attr("x", function (d, i) { return i * ((width - padding) / dataset.length) + padding + ((width - padding) / dataset.length / 10); })
+            .attr("y", function (d) { return height - scale(d); });
+
+        d3.select("body")
+            .append("p")
+            .attr("id", "max")
+            .text("max > " + max);
+
+        d3.select("body")
+            .append("p")
+            .attr("id", "min")
+            .text("min > " + min);
+
+        d3.select("body")
+            .append("p")
+            .attr("id", "left")
+            .text("left > " + tempdata[0]);
+
+        d3.select("body")
+            .append("p")
+            .attr("id", "center")
+            .text("cetner > " + tempdata[Math.floor(tempdata.length / 2)]);
+
+        d3.select("body")
+            .append("p")
+            .attr("id", "right")
+            .text("right > " + tempdata[tempdata.length - 1]);
+
+        var LCR = function () {
+            d3.select("#left")
+                .text("left > " + tempdata[0]);
+            d3.select("#center")
+                .text("center > " + tempdata[Math.floor(tempdata.length / 2)]);
+            d3.select("#right")
+                .text("right > " + tempdata[tempdata.length - 1]);
+        }
+
+        // Reset
+        d3.select("body")
+            .append("button")
+            .text("reset")
+            .style("color", "pink")
+            .on("click", function () {
+                tempdata = dataset.slice();
+                var rect = svg.selectAll("rect")
+                    .data(tempdata);
+
+                rect.transition()
+                    .duration(500)
+                    .attr("width", function (d, i) { return (width - padding) / dataset.length - ((width - padding) / dataset.length / 10); })
+                    .attr("height", function (d) { return scale(d) - padding; })
+                    .attr("x", function (d, i) { return i * ((width - padding) / dataset.length) + padding + ((width - padding) / dataset.length / 10); })
+                    .attr("y", function (d) { return height - scale(d); })
+
+                LCR();
+            });
+
+        // Reverse
+        d3.select("body")
+            .append("button")
+            .text("reverse")
+            .style("color", "cornflowerblue")
+            .on("click", function () {
+                tempdata.reverse();
+                var rect = svg.selectAll("rect")
+                    .data(tempdata);
+
+                rect.transition()
+                    .duration(500)
+                    .attr("width", function (d, i) { return (width - padding) / dataset.length - ((width - padding) / dataset.length / 10); })
+                    .attr("height", function (d) { return scale(d) - padding; })
+                    .attr("x", function (d, i) { return i * ((width - padding) / dataset.length) + padding + ((width - padding) / dataset.length / 10); })
+                    .attr("y", function (d) { return height - scale(d); })
+
+                LCR();
+            });
+
+        // Increase
+        d3.select("body")
+            .append("button")
+            .text("increase")
+            .style("color", "forestgreen")
+            .on("click", function () {
+                tempdata.sort(function (a, b) {
+                    return a - b;
+                });
+                var rect = svg.selectAll("rect")
+                    .data(tempdata);
+
+                rect.transition()
+                    .duration(500)
+                    .attr("width", function (d, i) { return (width - padding) / dataset.length - ((width - padding) / dataset.length / 10); })
+                    .attr("height", function (d) { return scale(d) - padding; })
+                    .attr("x", function (d, i) { return i * ((width - padding) / dataset.length) + padding + ((width - padding) / dataset.length / 10); })
+                    .attr("y", function (d) { return height - scale(d); });
+
+                LCR();
+            });
+
+
+        // Decrease
+        d3.select("body")
+            .append("button")
+            .text("decrease")
+            .style("color", "orange")
+            .on("click", function () {
+                tempdata.sort(function (a, b) {
+                    return b - a;
+                });
+                var rect = svg.selectAll("rect")
+                    .data(tempdata);
+
+                rect.transition()
+                    .duration(500)
+                    .attr("width", function (d, i) { return (width - padding) / dataset.length - ((width - padding) / dataset.length / 10); })
+                    .attr("height", function (d) { return scale(d) - padding; })
+                    .attr("x", function (d, i) { return i * ((width - padding) / dataset.length) + padding + ((width - padding) / dataset.length / 10); })
+                    .attr("y", function (d) { return height - scale(d); });
+
+                LCR();
+            });
+    </script>
+
+</body>
+
+</html>

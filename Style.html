@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <script src="http://d3js.org/d3.v3.js"></script>
+</head>
+
+<body>
+    <script>
+        var dataSet = [5, 10, 15, 20, 25];
+        d3.select("body").selectAll()
+            .data(dataSet)
+            .enter()
+            .append("p")
+            .text("New P")
+            .style("color", "red");
+
+        d3.select("body").selectAll()
+            .data(dataSet)
+            .enter()
+            .append("p")
+            .text("New P")
+            .style("color", function (d) {
+                if (d > 15) {
+                    return "red";
+                } else {
+                    return "blue";
+                }
+            });
+    </script>
+</body>
+
+</html>
