@@ -17,5 +17,10 @@
 * D3.js is a library that binds data and images.
 * Import the server's numeric data into your web browser, change it to a browser document element and render it.
 
+### Process
+1. The data is loaded.
+2. Select the space to work with.
+3. Bind space and data.
+
 ## Histories
     2018.08.01. ~ D3.
