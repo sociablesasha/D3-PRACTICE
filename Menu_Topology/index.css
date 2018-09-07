@@ -1,0 +1,25 @@
+#topology {
+    width: 1000;
+    height: 800;
+    background-image: url("./Topology.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 100% 100%;
+}
+
+.svg {
+    cursor: pointer;
+    border: 1px solid black;
+}
+
+.node {
+    cursor: crosshair;
+}
+
+.link {
+    cursor: crosshair;
+    fill: none;
+    stroke: orange;
+    stroke-opacity: 0.5;
+    stroke-width: 5;
+}
