@@ -1,25 +1,140 @@
-#topology {
+.topology {
+    display: inline-block;
+
     width: 1000;
     height: 800;
     background-image: url("./Topology.png");
     background-repeat: no-repeat;
     background-position: center center;
     background-size: 100% 100%;
+
+    border: 5px solid black;
 }
 
-.svg {
+.topology .svg {
     cursor: pointer;
-    border: 1px solid black;
 }
 
-.node {
+.topology .node {
     cursor: crosshair;
 }
 
-.link {
+.topology .accent {
+    border : 1px solid black;
+}
+
+.topology .link {
     cursor: crosshair;
     fill: none;
     stroke: orange;
     stroke-opacity: 0.5;
     stroke-width: 5;
+}
+
+.topology-content {
+    display: inline-block;
+
+    width: 250px;
+    height: 800px;
+
+    margin-left: 5px;
+
+    border: 5px solid black;
+}
+
+.topology-content .nodes {
+    height: 487.5px;
+
+    padding: 5px;
+
+    border-bottom: 5px solid black;
+
+    overflow-y: scroll;
+}
+
+.topology-content .nodes .node {
+    height: 50px;
+
+    margin: 10px;
+
+    line-height: 50px;
+
+    cursor: pointer;
+}
+
+.topology-content .nodes .node-image {
+    width: 50px;
+
+    float: left;
+}
+
+.topology-content .nodes .node-name {
+    display: inline;
+
+    margin-left: 10px;
+
+    overflow: hidden; 
+    text-overflow: ellipsis;
+    white-space: nowrap; 
+}
+
+.topology-content .links {
+    height: 287.5px;
+
+    padding: 5px;
+
+    overflow-y: scroll;
+}
+
+.topology-content .links .link {
+    height: 50px;
+
+    margin: 10px;
+}
+
+.topology-content .links .link .node {
+    width: 70px;
+    height: 50px;
+
+    text-align: center;
+}
+
+.topology-content .links .link .source-node {
+    float: left;
+}
+
+.topology-content .links .link .destination-node {
+    float: right;
+}
+
+.topology-content .links .link .node-image {
+    width: 40px;
+}
+
+.topology-content .links .link .node-name {
+    margin: 0 auto;
+
+    width: 50px;
+
+    font-size: 10px;
+    
+    overflow: hidden; 
+    text-overflow: ellipsis;
+    white-space: nowrap; 
+}
+
+.topology-content .links .link .node-link {
+    width: 50px;
+
+    float: left;
+}
+
+.topology-content .links .link .link-nodes {
+    margin-left: 80px; 
+}
+
+.topology-content .links .link .link-nodes::after {
+    content: "";
+    clear: both;
+    display: block;
 }

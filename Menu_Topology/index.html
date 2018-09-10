@@ -9,7 +9,33 @@
 </head>
 
 <body>
-    <div id="topology"></div>
+    <div>
+        <div class="topology" id="topology"></div>
+        <div class="topology-content">
+            <div class="nodes">
+                <div class="node" id="template_node" style="display: none">
+                    <img class="node-image">
+                    <div class="node-name"></div>
+                </div>
+            </div>
+            <div class="links">
+                <div class="link" id="template_link" style="display: none">
+                    <img class="node-link">
+                    <div class="link-nodes">
+                        <div class="node source-node">
+                            <img class="node-image">
+                            <div class="node-name"></div>
+                        </div>
+                        <div class="node destination-node">
+                            <img class="node-image">
+                            <div class="node-name"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
 
     <!-- Jquery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
