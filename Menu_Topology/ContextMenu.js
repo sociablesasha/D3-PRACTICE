@@ -1,8 +1,8 @@
-(function(root, factory) {
+(function (root, factory) {
 	if (typeof module === 'object' && module.exports) {
 		var d3 = require('d3');
 		module.exports = factory(d3);
-	} else if(typeof define === 'function' && define.amd) {
+	} else if (typeof define === 'function' && define.amd) {
 		try {
 			var d3 = require('d3');
 		} catch (e) {
@@ -10,17 +10,17 @@
 		}
 
 		d3.contextMenu = factory(d3);
-		define([], function() {
+		define([], function () {
 			return d3.contextMenu;
 		});
-	} else if(root.d3) {
+	} else if (root.d3) {
 		root.d3.contextMenu = factory(root.d3);
 	}
 }(this,
 	function (d3) {
 		var utils = {
-			noop: function () {},
-			
+			noop: function () { },
+
 			/**
 			 * @param {*} value
 			 * @returns {Boolean}
@@ -118,16 +118,16 @@
 				d3.select('body').on('mousedown.d3-context-menu', closeMenu);
 
 				var list = d3.selectAll('.d3-context-menu')
-					.on('contextmenu', function() {
+					.on('contextmenu', function () {
 						closeMenu();
 						d3.event.preventDefault();
 						d3.event.stopPropagation();
 					})
 					.append('ul');
-				
+
 				list.selectAll('li').data(menuItems.bind(element)(data, index)).enter()
 					.append('li')
-					.attr('class', function(d) {
+					.attr('class', function (d) {
 						var ret = '';
 						if (utils.toFactory(d.divider).bind(element)(data, index)) {
 							ret += ' is-divider';
@@ -140,7 +140,7 @@
 						}
 						return ret;
 					})
-					.html(function(d) {
+					.html(function (d) {
 						if (utils.toFactory(d.divider).bind(element)(data, index)) {
 							return '<hr>';
 						}
@@ -149,7 +149,7 @@
 						}
 						return utils.toFactory(d.title).bind(element)(data, index);
 					})
-					.on('click', function(d, i) {
+					.on('click', function (d, i) {
 						if (utils.toFactory(d.disabled).bind(element)(data, index)) return; // do nothing if disabled
 						if (!d.action) return; // headers have no "action"
 						d.action.bind(element)(data, index);

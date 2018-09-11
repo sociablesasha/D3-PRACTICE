@@ -1,20 +1,37 @@
-// @Defined Value
+/**
+ * @var SVG
+ */
 var width = 1000,
     height = 800;
-// @Defined Event
+
+
+
+/**
+ * @var Event
+ */
 var drag = null;
 var clickSVG = null;
 var clickNode = null;
 var clickLink = null;
 var mousedown = null;
 var mouseup = null;
-// @Defined Variable
+
+
+
+/**
+ * @var Variable
+ */
 var svg = null;
 var node = null;
 var link = null;
 var nodes = null;
 var links = null;
-// @Defined Menu
+
+
+
+/**
+ * @var Menu
+ */
 var menu_svg = [
     {
         title: 'MAP',
@@ -205,9 +222,13 @@ var menu_link = [
         }
     }
 ];
-// @Related default setting
-// @ExcutePoint After loading
-// @Function defaultSetting
+
+
+
+/**
+ * @todo default setting
+ * @function defaultSetting
+ */
 function defaultSetting() {
     d3.select(".svg").remove();
     svg = d3.select("#topology").append("svg")
@@ -236,9 +257,13 @@ function defaultSetting() {
         drawing();
     });
 }
-// @Related manage
-// @ExcutePoint After Event Function
-// @Function managing
+
+
+
+/**
+ * @todo manage
+ * @function managing
+ */
 function managing(node) {
     node.x = Math.max(15, Math.min(width - 15, d3.event.x));
     node.y = Math.max(15, Math.min(height - 15, d3.event.y));
@@ -249,7 +274,6 @@ function managing(node) {
     // @FIXED Append -> Insert
     $(links).each(function () {
         var d = this;
-
         svg
             .insert("path", ".node")
             .attr("class", "link")
@@ -265,10 +289,14 @@ function managing(node) {
             });
     });
 }
-// @Related addNode
-// @ExcutePoint After Event Function
-// @Function addingNode
-// @Function addingNodeWithCursor => Event Listen
+
+
+
+/**
+ * @todo addNode
+ * @function addingNode
+ * @function addingNodeWithCursor => Event Listen
+ */
 function addingNode() {
     svg.style("cursor", "copy")
     svg.on("click", addingNodeWithCursor);
@@ -312,9 +340,13 @@ function addingNodeWithCursor() {
     }
     svg.on("click", null);
 }
-// @Related addLine
-// @ExcutePoint After Event Function
-// @Function addingLine => Create with down, up
+
+
+
+/**
+ * @todo addLine
+ * @function addingLine => Create with down, up
+ */
 var down, up;
 function addingLineDown(node) {
     down = node;
@@ -354,10 +386,14 @@ function addingLine() {
     down = null;
     up = null;
 }
-// @Related removeNode
-// @ExcutePoint After Event Function
-// @Function removingNode
-// @Function removingNodeAll
+
+
+
+/**
+ * @todo removeNode
+ * @function removingNode
+ * @function removingNodeAll
+ */
 function removingNode(node) {
     // Remove Node
     nodes.splice(nodes.indexOf(node), 1);
@@ -379,11 +415,15 @@ function removingNodeAll() {
     links.splice(0, links.length);
     drawing();
 }
-// @Related removeLink
-// @ExcutePoint After Event Function
-// @Function removingNode
-// @Function removingNodeWithNode
-// @Function removingNodeAll
+
+
+
+/**
+ * @todo removeLink
+ * @function removingNode
+ * @function removingNodeWithNode
+ * @function removingNodeAll
+ */
 function removingLink(link) {
     // Remove Link
     links.splice(links.indexOf(link), 1);
@@ -406,17 +446,24 @@ function removingLinkAll() {
     links.splice(0, links.length);
     drawing();
 }
-// @Related reset options (event, css)
-// @ExcutePoint After Menu
-// @Funtion resetOptions
+
+
+
+/**
+ * @todo reset options (event, css)
+ * @function resetOptions
+ */
 function resetOptions() {
     svg
         .on("click", null)
         .style("cursor", "pointer");
 }
-// @Related draw
-// @ExcutePoint Anywhere
-// @Function drawing
+
+
+/**
+ * @todo draw
+ * @function drawing
+ */
 function drawing(options) {
     svg.selectAll(".link").remove();
     svg.selectAll(".node").remove();
@@ -468,6 +515,12 @@ function drawing(options) {
 
 }
 
+
+
+/**
+ * @todo nodesContent
+ * @function nodesContent
+ */
 function nodesContent() {
     $(".active-nodes").remove();
     nodes.forEach(function (data) {
@@ -486,6 +539,12 @@ function nodesContent() {
     });
 }
 
+
+
+/**
+ * @todo linksContent
+ * @function linksContent
+ */
 function linksContent() {
     $(".active-links").remove();
     links.forEach(function (data) {
@@ -503,6 +562,12 @@ function linksContent() {
     });
 }
 
+
+
+/**
+ * @todo load
+ * @function loading
+ */
 $(document).ready(function () {
     setTimeout(defaultSetting(), 0);
 }); 
