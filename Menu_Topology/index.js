@@ -245,22 +245,25 @@ function managing(node) {
     d3.select(this)
         .attr("transform", "translate(" + node.x + "," + node.y + ")");
     svg.selectAll(".link").remove();
-    link = svg.selectAll(".link");
+
     // @FIXED Append -> Insert
-    link
-        .data(links)
-        .enter().append("path")
-        .attr("class", "link")
-        .on('contextmenu', d3.contextMenu(menu_link, {
-            onOpen: function (data, index) { resetOptions(); },
-            onClose: function (data, index) { }
-        }))
-        .attr("d", function (d) {
-            var dx = d.target.x - d.source.x,
-                dy = d.target.y - d.source.y,
-                dr = Math.sqrt(dx * dx + dy * dy);
-            return "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.x + "," + d.target.y;
-        });
+    $(links).each(function () {
+        var d = this;
+
+        svg
+            .insert("path", ".node")
+            .attr("class", "link")
+            .on('contextmenu', d3.contextMenu(menu_link, {
+                onOpen: function (data, index) { resetOptions(); },
+                onClose: function (data, index) { }
+            }))
+            .attr("d", function () {
+                var dx = d.target.x - d.source.x,
+                    dy = d.target.y - d.source.y,
+                    dr = Math.sqrt(dx * dx + dy * dy);
+                return "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.x + "," + d.target.y;
+            });
+    });
 }
 // @Related addNode
 // @ExcutePoint After Event Function
@@ -437,6 +440,7 @@ function drawing(options) {
                 dr = Math.sqrt(dx * dx + dy * dy);
             return "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.x + "," + d.target.y;
         });
+
     node
         .data(nodes)
         .enter().append("g")
