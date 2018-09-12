@@ -15,6 +15,7 @@ var clickNode = null;
 var clickLink = null;
 var mousedown = null;
 var mouseup = null;
+var interval = null;
 
 
 
@@ -243,14 +244,39 @@ function defaultSetting() {
     d3.json("./Topology.json", function (error, graph) {
         // Define Node Map
         var nodeMap = {};
+
+        // Define Sount Track
+        var danger = false;
+        var warning = false;
+
         // Rearrangement
-        graph.nodes.forEach(function (d) { nodeMap[d.id] = d; });
+        graph.nodes.forEach(function (d) {
+            if (d.icon.indexOf("danger") != -1) {
+                danger = true;
+            } else if (d.icon.indexOf("warning") != -1) {
+                warning = true;
+            }
+            nodeMap[d.id] = d;
+        });
         graph.links.forEach(function (l) {
             if (typeof nodeMap[l.target] === 'undefined') { console.log("l.target undefined id=" + l.target.name); }
             else { l.target = nodeMap[l.target]; }
             if (typeof nodeMap[l.source] === 'undefined') { console.log("l.source undefined id=" + l.source.name); }
             else { l.source = nodeMap[l.source]; }
         });
+
+        // Sound Track
+        if (danger) {
+            soundPlay("danger");
+        } else {
+            soundStop("danger");
+        }
+        if (warning) {
+            soundPlay("warning");
+        } else {
+            soundStop("warning");
+        }
+
         // Set ArrayList
         nodes = graph.nodes;
         links = graph.links;
@@ -565,9 +591,30 @@ function linksContent() {
 
 
 /**
+ * @todo play the sound
+ * @function soundPlay
+ */
+function soundPlay (value) {
+    document.getElementById(value).play();
+}
+
+
+
+/**
+ * @todo play the sound
+ * @function soundStop
+ */
+function soundStop (value) {
+    document.getElementById(value).pause();
+}
+
+
+
+/**
  * @todo load
  * @function loading
  */
 $(document).ready(function () {
-    setTimeout(defaultSetting(), 0);
+    defaultSetting();
+    interval = setInterval(defaultSetting, 15000);
 }); 

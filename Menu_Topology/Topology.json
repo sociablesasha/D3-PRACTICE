@@ -2,7 +2,7 @@
     "nodes": [
         {
             "id": 20160201101048880,
-            "icon": "https://image.flaticon.com/icons/svg/60/60740.svg",
+            "icon": "./image/database.png",
             "objtype": 3,
             "name": "분당백본",
             "group": "1",
@@ -11,7 +11,7 @@
         },
         {
             "id": 20160201101048896,
-            "icon": "https://image.flaticon.com/icons/svg/60/60740.svg",
+            "icon": "./image/database.png",
             "objtype": 3,
             "name": "rdcenter",
             "group": "1",
@@ -20,7 +20,7 @@
         },
         {
             "id": 20160201101048910,
-            "icon": "https://image.flaticon.com/icons/svg/60/60740.svg",
+            "icon": "./image/database.png",
             "objtype": 7,
             "name": "192.168.105.194",
             "group": "1",
@@ -29,7 +29,7 @@
         },
         {
             "id": 20160201101048930,
-            "icon": "https://image.flaticon.com/icons/svg/60/60740.svg",
+            "icon": "./image/database.png",
             "objtype": 1,
             "name": "WIN-MHNKNMHE21H",
             "group": "1",
@@ -38,7 +38,7 @@
         },
         {
             "id": 20160201101048976,
-            "icon": "https://image.flaticon.com/icons/svg/60/60740.svg",
+            "icon": "./image/database.png",
             "objtype": 2,
             "name": "192.168.105.8",
             "group": "1",
@@ -47,7 +47,7 @@
         },
         {
             "id": 20160201101049040,
-            "icon": "https://image.flaticon.com/icons/svg/60/60740.svg",
+            "icon": "./image/router.png",
             "objtype": 13,
             "name": "105.5_test2",
             "group": "1",
@@ -56,7 +56,7 @@
         },
         {
             "id": 20160201101049084,
-            "icon": "https://image.flaticon.com/icons/svg/60/60740.svg",
+            "icon": "./image/router.png",
             "objtype": 3,
             "name": "192.168.105.177",
             "group": "1",
@@ -65,7 +65,7 @@
         },
         {
             "id": 20160201101049100,
-            "icon": "https://image.flaticon.com/icons/svg/60/60740.svg",
+            "icon": "./image/router.png",
             "objtype": 2,
             "name": "192.168.105.191_1",
             "group": "1",
