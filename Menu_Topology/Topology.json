@@ -2,7 +2,7 @@
     "nodes": [
         {
             "id": 20160201101048880,
-            "icon": "./image/database.png",
+            "icon": "./image/database-danger.png",
             "objtype": 3,
             "name": "분당백본",
             "group": "1",
