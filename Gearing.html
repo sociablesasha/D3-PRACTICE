@@ -50,7 +50,8 @@
         <label for="ref-sun">Sun</label>
     </form>
 
-    <script>var width = 960,
+    <script>
+        var width = 960,
             height = 500,
             radius = 80,
             x = Math.sin(2 * Math.PI / 3),
@@ -68,51 +69,74 @@
             .append("g");
 
         var frame = svg.append("g")
-            .datum({ radius: Infinity });
+            .datum({
+                radius: Infinity
+            });
 
         frame.append("g")
             .attr("class", "annulus")
-            .datum({ teeth: 80, radius: -radius * 5, annulus: true })
+            .datum({
+                teeth: 80,
+                radius: -radius * 5,
+                annulus: true
+            })
             .append("path")
             .attr("d", gear);
 
         frame.append("g")
             .attr("class", "sun")
-            .datum({ teeth: 16, radius: radius })
+            .datum({
+                teeth: 16,
+                radius: radius
+            })
             .append("path")
             .attr("d", gear);
 
         frame.append("g")
             .attr("class", "planet")
             .attr("transform", "translate(0,-" + radius * 3 + ")")
-            .datum({ teeth: 32, radius: -radius * 2 })
+            .datum({
+                teeth: 32,
+                radius: -radius * 2
+            })
             .append("path")
             .attr("d", gear);
 
         frame.append("g")
             .attr("class", "planet")
             .attr("transform", "translate(" + -radius * 3 * x + "," + -radius * 3 * y + ")")
-            .datum({ teeth: 32, radius: -radius * 2 })
+            .datum({
+                teeth: 32,
+                radius: -radius * 2
+            })
             .append("path")
             .attr("d", gear);
 
         frame.append("g")
             .attr("class", "planet")
             .attr("transform", "translate(" + radius * 3 * x + "," + -radius * 3 * y + ")")
-            .datum({ teeth: 32, radius: -radius * 2 })
+            .datum({
+                teeth: 32,
+                radius: -radius * 2
+            })
             .append("path")
             .attr("d", gear);
 
         d3.selectAll("input[name=reference]")
             .data([radius * 5, Infinity, -radius])
-            .on("change", function (radius1) {
-                var radius0 = frame.datum().radius, angle = (Date.now() - start) * speed;
-                frame.datum({ radius: radius1 });
+            .on("change", (radius1) => {
+                var radius0 = frame.datum().radius,
+                    angle = (Date.now() - start) * speed;
+                frame.datum({
+                    radius: radius1
+                });
                 svg.attr("transform", "rotate(" + (offset += angle / radius0 - angle / radius1) + ")");
             });
 
         d3.selectAll("input[name=speed]")
-            .on("change", function () { speed = +this.value; });
+            .on("change", () => {
+                speed = +this.value;
+            });
 
         function gear(d) {
             var n = d.teeth,
@@ -135,9 +159,11 @@
             return path.join("");
         }
 
-        d3.timer(function () {
+        d3.timer(() => {
             var angle = (Date.now() - start) * speed,
-                transform = function (d) { return "rotate(" + angle / d.radius + ")"; };
+                transform = (d) => {
+                    return "rotate(" + angle / d.radius + ")";
+                };
             frame.selectAll("path").attr("transform", transform);
             frame.attr("transform", transform); // frame of reference
         });

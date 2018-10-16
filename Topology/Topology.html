@@ -43,7 +43,6 @@
     <div id="topology"></div>
 
     <script>
-
         // @Defined Value
         var width = 550,
             height = 800;
@@ -79,25 +78,25 @@
                 .style("border", "1px solid black");
 
             // Get JSON Object
-            d3.json("./Topology.json", function (error, graph) {
+            d3.json("./Topology.json", (error, graph) => {
 
                 // Define Node Map
                 var nodeMap = {};
 
                 // Rearrangement
-                graph.nodes.forEach(function (d) { nodeMap[d.id] = d; });
-                graph.links.forEach(function (l) {
+                graph.nodes.forEach((d) => {
+                    nodeMap[d.id] = d;
+                });
+                graph.links.forEach((l) => {
 
                     if (typeof nodeMap[l.target] === 'undefined') {
                         console.log("l.target undefined id=" + l.target);
-                    }
-                    else {
+                    } else {
                         l.target = nodeMap[l.target];
                     }
                     if (typeof nodeMap[l.source] === 'undefined') {
                         console.log("l.source undefined id=" + l.source);
-                    }
-                    else {
+                    } else {
                         l.source = nodeMap[l.source];
                     }
                 });
@@ -116,32 +115,32 @@
         // @Related mode
         // @ExcutePoint After Event
         // @Function button.click => drawing(options)
-        $('#manage').click(function () {
+        $('#manage').click(() => {
             alert('관리 모드');
             drawing("manage");
         });
 
-        $('#addResource').click(function () {
+        $('#addResource').click(() => {
             alert('장비 추가');
             drawing("addResource");
         });
 
-        $('#removeResource').click(function () {
+        $('#removeResource').click(() => {
             alert('장비 삭제');
             drawing("removeResource");
         });
 
-        $('#addLine').click(function () {
+        $('#addLine').click(() => {
             alert('선 추가');
             drawing("addLine");
         });
 
-        $('#removeLine').click(function () {
+        $('#removeLine').click(() => {
             alert('선 삭제');
             drawing("removeLine");
         });
 
-        $('#store').click(function () {
+        $('#store').click(() => {
             alert('저장');
 
             var object = new Object();
@@ -174,11 +173,12 @@
                 .data(links)
                 .enter().append("path")
                 .attr("class", "link")
-                .attr("d", function (d) {
+                .attr("d", (d) => {
                     var dx = d.target.x - d.source.x,
                         dy = d.target.y - d.source.y,
                         dr = Math.sqrt(dx * dx + dy * dy);
-                    return "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.x + "," + d.target.y;
+                    return "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.x + "," +
+                        d.target.y;
                 });
         }
 
@@ -195,9 +195,9 @@
             var node_icon = prompt("icon");
             var node_id = Date.now();
 
-            if (node_name == null || node_object == null
-                || node_icon == null || node_id == null
-                || node_x == null || node_y == null) {
+            if (node_name == null || node_object == null ||
+                node_icon == null || node_id == null ||
+                node_x == null || node_y == null) {
 
                 console.log("null");
                 return false;
@@ -221,14 +221,16 @@
                 .enter().append("g")
                 .attr("class", "node")
                 .append("image")
-                .attr("transform", function (d) {
+                .attr("transform", (d) => {
                     return "translate(" + d.x + "," + d.y + ")";
                 })
                 .attr('x', -(30 / 2))
                 .attr('y', -(30 / 2))
                 .attr('width', 30)
                 .attr('height', 30)
-                .attr("href", function (d) { return d.icon })
+                .attr("href", (d) => {
+                    return d.icon
+                })
         }
 
         // @Related removeResource
@@ -240,14 +242,14 @@
 
             // Remove Link
             var temps = [];
-            links.forEach(function (link) {
-                if (node.id == link.source.id
-                    || node.id == link.target.id) {
+            links.forEach((link) => {
+                if (node.id == link.source.id ||
+                    node.id == link.target.id) {
                     temps.push(link);
                 }
             });
 
-            temps.forEach(function (temp) {
+            temps.forEach((temp) => {
                 links.splice(links.indexOf(temp), 1);
             });
 
@@ -274,7 +276,7 @@
         function addingLine() {
             if (down != up) {
                 var temp = true;
-                links.forEach(function (link) {
+                links.forEach((link) => {
                     if (link.source == down && link.target == up) {
                         temp = false;
                     }
@@ -323,7 +325,9 @@
             switch (options) {
                 case "manage":
                     drag = d3.behavior.drag()
-                        .origin(function (d) { return d; })
+                        .origin((d) => {
+                            return d;
+                        })
                         .on("drag", managing);
                     clickSVG = null;
                     clickNode = null;
@@ -333,7 +337,9 @@
                     break;
                 case "addResource":
                     drag = d3.behavior.drag()
-                        .origin(function (d) { return d; })
+                        .origin((d) => {
+                            return d;
+                        })
                         .on("drag", null);
                     clickSVG = addingResource;
                     clickNode = null;
@@ -343,7 +349,9 @@
                     break;
                 case "removeResource":
                     drag = d3.behavior.drag()
-                        .origin(function (d) { return d; })
+                        .origin((d) => {
+                            return d;
+                        })
                         .on("drag", null);
                     clickSVG = null;
                     clickNode = removingResource;
@@ -353,7 +361,9 @@
                     break;
                 case "addLine":
                     drag = d3.behavior.drag()
-                        .origin(function (d) { return d; })
+                        .origin((d) => {
+                            return d;
+                        })
                         .on("drag", null);
                     clickSVG = null;
                     clickNode = null;
@@ -363,7 +373,9 @@
                     break;
                 case "removeLine":
                     drag = d3.behavior.drag()
-                        .origin(function (d) { return d; })
+                        .origin((d) => {
+                            return d;
+                        })
                         .on("drag", null);
                     clickSVG = null;
                     clickNode = null;
@@ -380,11 +392,12 @@
                 .data(links)
                 .enter().append("path")
                 .attr("class", "link")
-                .attr("d", function (d) {
+                .attr("d", (d) => {
                     var dx = d.target.x - d.source.x,
                         dy = d.target.y - d.source.y,
                         dr = Math.sqrt(dx * dx + dy * dy);
-                    return "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.x + "," + d.target.y;
+                    return "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.x + "," +
+                        d.target.y;
                 })
                 .on("click", clickLink);
 
@@ -393,14 +406,16 @@
                 .enter().append("g")
                 .attr("class", "node")
                 .append("image")
-                .attr("transform", function (d) {
+                .attr("transform", (d) => {
                     return "translate(" + d.x + "," + d.y + ")";
                 })
                 .attr('x', -(30 / 2))
                 .attr('y', -(30 / 2))
                 .attr('width', 30)
                 .attr('height', 30)
-                .attr("href", function (d) { return d.icon })
+                .attr("href", (d) => {
+                    return d.icon
+                })
                 .call(drag)
                 .on("click", clickNode)
                 .on("mousedown", mousedown)

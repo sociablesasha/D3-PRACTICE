@@ -16,17 +16,17 @@
         var tempdata = dataset.slice();
 
         // Max, Min
-        var max = tempdata.reduce(function (previous, current) {
+        var max = tempdata.reduce((previous, current) => {
             return previous > current ? previous : current;
         });
 
-        var min = tempdata.reduce(function (previous, current) {
+        var min = tempdata.reduce((previous, current) => {
             return previous > current ? current : previous;
         });
 
 
         var svg = d3.select("body").
-            append("svg")
+        append("svg")
             .attr("width", width)
             .attr("height", height);
 
@@ -50,10 +50,19 @@
             .data(tempdata)
             .enter()
             .append("rect")
-            .attr("width", function (d, i) { return (width - padding) / dataset.length - ((width - padding) / dataset.length / 10); })
-            .attr("height", function (d) { return scale(d) - padding; })
-            .attr("x", function (d, i) { return i * ((width - padding) / dataset.length) + padding + ((width - padding) / dataset.length / 10); })
-            .attr("y", function (d) { return height - scale(d); });
+            .attr("width", (d, i) => {
+                return (width - padding) / dataset.length - ((width - padding) / dataset.length / 10);
+            })
+            .attr("height", (d) => {
+                return scale(d) - padding;
+            })
+            .attr("x", (d, i) => {
+                return i * ((width - padding) / dataset.length) + padding + ((width - padding) / dataset.length /
+                    10);
+            })
+            .attr("y", (d) => {
+                return height - scale(d);
+            });
 
         d3.select("body")
             .append("p")
@@ -80,7 +89,7 @@
             .attr("id", "right")
             .text("right > " + tempdata[tempdata.length - 1]);
 
-        var LCR = function () {
+        var LCR = () => {
             d3.select("#left")
                 .text("left > " + tempdata[0]);
             d3.select("#center")
@@ -94,17 +103,26 @@
             .append("button")
             .text("reset")
             .style("color", "pink")
-            .on("click", function () {
+            .on("click", () => {
                 tempdata = dataset.slice();
                 var rect = svg.selectAll("rect")
                     .data(tempdata);
 
                 rect.transition()
                     .duration(500)
-                    .attr("width", function (d, i) { return (width - padding) / dataset.length - ((width - padding) / dataset.length / 10); })
-                    .attr("height", function (d) { return scale(d) - padding; })
-                    .attr("x", function (d, i) { return i * ((width - padding) / dataset.length) + padding + ((width - padding) / dataset.length / 10); })
-                    .attr("y", function (d) { return height - scale(d); })
+                    .attr("width", (d, i) => {
+                        return (width - padding) / dataset.length - ((width - padding) / dataset.length / 10);
+                    })
+                    .attr("height", (d) => {
+                        return scale(d) - padding;
+                    })
+                    .attr("x", (d, i) => {
+                        return i * ((width - padding) / dataset.length) + padding + ((width - padding) /
+                            dataset.length / 10);
+                    })
+                    .attr("y", (d) => {
+                        return height - scale(d);
+                    })
 
                 LCR();
             });
@@ -114,17 +132,26 @@
             .append("button")
             .text("reverse")
             .style("color", "cornflowerblue")
-            .on("click", function () {
+            .on("click", () => {
                 tempdata.reverse();
                 var rect = svg.selectAll("rect")
                     .data(tempdata);
 
                 rect.transition()
                     .duration(500)
-                    .attr("width", function (d, i) { return (width - padding) / dataset.length - ((width - padding) / dataset.length / 10); })
-                    .attr("height", function (d) { return scale(d) - padding; })
-                    .attr("x", function (d, i) { return i * ((width - padding) / dataset.length) + padding + ((width - padding) / dataset.length / 10); })
-                    .attr("y", function (d) { return height - scale(d); })
+                    .attr("width", (d, i) => {
+                        return (width - padding) / dataset.length - ((width - padding) / dataset.length / 10);
+                    })
+                    .attr("height", (d) => {
+                        return scale(d) - padding;
+                    })
+                    .attr("x", (d, i) => {
+                        return i * ((width - padding) / dataset.length) + padding + ((width - padding) /
+                            dataset.length / 10);
+                    })
+                    .attr("y", (d) => {
+                        return height - scale(d);
+                    })
 
                 LCR();
             });
@@ -134,8 +161,8 @@
             .append("button")
             .text("increase")
             .style("color", "forestgreen")
-            .on("click", function () {
-                tempdata.sort(function (a, b) {
+            .on("click", () => {
+                tempdata.sort((a, b) => {
                     return a - b;
                 });
                 var rect = svg.selectAll("rect")
@@ -143,10 +170,19 @@
 
                 rect.transition()
                     .duration(500)
-                    .attr("width", function (d, i) { return (width - padding) / dataset.length - ((width - padding) / dataset.length / 10); })
-                    .attr("height", function (d) { return scale(d) - padding; })
-                    .attr("x", function (d, i) { return i * ((width - padding) / dataset.length) + padding + ((width - padding) / dataset.length / 10); })
-                    .attr("y", function (d) { return height - scale(d); });
+                    .attr("width", (d, i) => {
+                        return (width - padding) / dataset.length - ((width - padding) / dataset.length / 10);
+                    })
+                    .attr("height", (d) => {
+                        return scale(d) - padding;
+                    })
+                    .attr("x", (d, i) => {
+                        return i * ((width - padding) / dataset.length) + padding + ((width - padding) /
+                            dataset.length / 10);
+                    })
+                    .attr("y", (d) => {
+                        return height - scale(d);
+                    });
 
                 LCR();
             });
@@ -157,8 +193,8 @@
             .append("button")
             .text("decrease")
             .style("color", "orange")
-            .on("click", function () {
-                tempdata.sort(function (a, b) {
+            .on("click", () => {
+                tempdata.sort((a, b) => {
                     return b - a;
                 });
                 var rect = svg.selectAll("rect")
@@ -166,10 +202,19 @@
 
                 rect.transition()
                     .duration(500)
-                    .attr("width", function (d, i) { return (width - padding) / dataset.length - ((width - padding) / dataset.length / 10); })
-                    .attr("height", function (d) { return scale(d) - padding; })
-                    .attr("x", function (d, i) { return i * ((width - padding) / dataset.length) + padding + ((width - padding) / dataset.length / 10); })
-                    .attr("y", function (d) { return height - scale(d); });
+                    .attr("width", (d, i) => {
+                        return (width - padding) / dataset.length - ((width - padding) / dataset.length / 10);
+                    })
+                    .attr("height", (d) => {
+                        return scale(d) - padding;
+                    })
+                    .attr("x", (d, i) => {
+                        return i * ((width - padding) / dataset.length) + padding + ((width - padding) /
+                            dataset.length / 10);
+                    })
+                    .attr("y", (d) => {
+                        return height - scale(d);
+                    });
 
                 LCR();
             });

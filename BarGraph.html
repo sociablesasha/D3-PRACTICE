@@ -11,30 +11,31 @@
         var w = 500;
         var h = 500;
         var dataset = [5, 10, 13, 19, 21, 25, 22, 18, 15, 13,
-            11, 12, 15, 20, 18, 17, 16, 18, 23, 25];
+            11, 12, 15, 20, 18, 17, 16, 18, 23, 25
+        ];
 
         // var dataset = [21, 48, 31, 16, 20, 26, 50, 19, 30, 9];
 
         var svg = d3.select("body")
-                    .append("svg")
-                    .attr("width", w)
-                    .attr("height", h);
+            .append("svg")
+            .attr("width", w)
+            .attr("height", h);
 
         svg.selectAll("rect")
             .data(dataset)
             .enter()
             .append("rect")
-            .attr("x", function (d, i) {
+            .attr("x", (d, i) => {
                 return i * (w / dataset.length);
             })
-            .attr("y", function (d) {
-                return h - (d * 10); 
+            .attr("y", (d) => {
+                return h - (d * 10);
             })
             .attr("width", w / dataset.length - 1)
-            .attr("height", function (d) {
+            .attr("height", (d) => {
                 return d * 10;
             })
-            .attr("fill", function(d) {
+            .attr("fill", function (d) {
                 return "hotpink";
             });
 
@@ -42,13 +43,13 @@
             .data(dataset)
             .enter()
             .append("text")
-            .text(function (d) {
+            .text((d) => {
                 return d;
             })
-            .attr("x", function (d, i) {
+            .attr("x", (d, i) => {
                 return i * (w / dataset.length) + (w / dataset.length) / 2;
             })
-            .attr("y", function (d) {
+            .attr("y", (d) => {
                 return h - (d * 10) + 30;
             })
             .attr("text-anchor", "middle")

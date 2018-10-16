@@ -12,21 +12,32 @@
             radius = 20;
 
         var drag = d3.behavior.drag()
-            .origin(function (d) { return d; })
+            .origin((d) => {
+                return d;
+            })
             .on("drag", drag)
             .on("dragend", dragend);
 
         var svg = d3.select("body")
             .append("svg")
-            .data(d3.range(1).map(function () { return { x: width / 2, y: height / 2 }; }))
+            .data(d3.range(1).map(() => {
+                return {
+                    x: width / 2,
+                    y: height / 2
+                };
+            }))
             .attr("width", width)
             .attr("height", height)
             .style("border", "1px solid black");
 
         svg.append("circle")
             .attr("r", radius)
-            .attr("cx", function (d) { return d.x; })
-            .attr("cy", function (d) { return d.y; })
+            .attr("cx", (d) => {
+                return d.x;
+            })
+            .attr("cy", (d) => {
+                return d.y;
+            })
             .call(drag);
 
         function drag(d) {
@@ -46,7 +57,6 @@
             d3.select(this)
                 .attr("fill", "black");
         }
-
     </script>
 </body>
 

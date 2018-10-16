@@ -45,13 +45,7 @@
     </div>
 
     <script>
-
-        // disabled: function (data, index) {
-        //     return true;
-        // },
-
-        var menu_svg = [
-            {
+        var menu_svg = [{
                 title: 'MAP',
             },
             {
@@ -60,32 +54,32 @@
             {
                 title: '새로운 맵 생성...',
 
-                action: function (data, index) {
+                action: (data, index) => {
                     console.log('Item clicked', 'element:', this, 'data:', data, 'index:', index);
                 }
             },
             {
                 title: '새로운 서브맵 생성...',
 
-                action: function (data, index) {
+                action: (data, index) => {
                     console.log('Item clicked', 'element:', this, 'data:', data, 'index:', index);
                 }
             },
             {
                 title: '맵 수정...',
-                action: function (data, index) {
+                action: (data, index) => {
                     console.log('Item clicked', 'element:', this, 'data:', data, 'index:', index);
                 }
             },
             {
                 title: '맵 삭제...',
-                action: function (data, index) {
+                action: (data, index) => {
                     console.log('Item clicked', 'element:', this, 'data:', data, 'index:', index);
                 }
             },
             {
                 title: '맵 저장...',
-                action: function (data, index) {
+                action: (data, index) => {
                     console.log('Item clicked', 'element:', this, 'data:', data, 'index:', index);
                 }
             },
@@ -94,20 +88,19 @@
             },
             {
                 title: '자원 전체 삭제...',
-                action: function (data, index) {
+                action: (data, index) => {
                     console.log('Item clicked', 'element:', this, 'data:', data, 'index:', index);
                 }
             },
             {
                 title: '연결 전체 삭제...',
-                action: function (data, index) {
+                action: (data, index) => {
                     console.log('Item clicked', 'element:', this, 'data:', data, 'index:', index);
                 }
             }
         ];
 
-        var menu_node = [
-            {
+        var menu_node = [{
                 title: 'Resource',
             },
             {
@@ -116,25 +109,25 @@
             {
                 title: '새로운 자원 추가...',
 
-                action: function (data, index) {
+                action: (data, index) => {
                     console.log('Item clicked', 'element:', this, 'data:', data, 'index:', index);
                 }
             },
             {
                 title: '자원 수정...',
-                action: function (data, index) {
+                action: (data, index) => {
                     console.log('Item clicked', 'element:', this, 'data:', data, 'index:', index);
                 }
             },
             {
                 title: '자원 삭제...',
-                action: function (data, index) {
+                action: (data, index) => {
                     console.log('Item clicked', 'element:', this, 'data:', data, 'index:', index);
                 }
             },
             {
                 title: '자원 전체 삭제...',
-                action: function (data, index) {
+                action: (data, index) => {
                     console.log('Item clicked', 'element:', this, 'data:', data, 'index:', index);
                 }
             },
@@ -143,26 +136,25 @@
             },
             {
                 title: '새로운 연결 추가...',
-                action: function (data, index) {
+                action: (data, index) => {
                     console.log('Item clicked', 'element:', this, 'data:', data, 'index:', index);
                 }
             },
             {
                 title: '연결 삭제...',
-                action: function (data, index) {
+                action: (data, index) => {
                     console.log('Item clicked', 'element:', this, 'data:', data, 'index:', index);
                 }
             },
             {
                 title: '연결 전체 삭제...',
-                action: function (data, index) {
+                action: (data, index) => {
                     console.log('Item clicked', 'element:', this, 'data:', data, 'index:', index);
                 }
             }
         ];
 
-        var menu_link = [
-            {
+        var menu_link = [{
                 title: 'Link',
             },
             {
@@ -171,19 +163,19 @@
             {
                 title: '새로운 연결 추가...',
 
-                action: function (data, index) {
+                action: (data, index) => {
                     console.log('Item clicked', 'element:', this, 'data:', data, 'index:', index);
                 }
             },
             {
                 title: '연결 삭제...',
-                action: function (data, index) {
+                action: (data, index) => {
                     console.log('Item clicked', 'element:', this, 'data:', data, 'index:', index);
                 }
             },
             {
                 title: '연결 전체 삭제...',
-                action: function (data, index) {
+                action: (data, index) => {
                     console.log('Item clicked', 'element:', this, 'data:', data, 'index:', index);
                 }
             }
@@ -195,34 +187,33 @@
 
         svg
             .on('contextmenu', d3.contextMenu(menu_svg, {
-                onOpen: function (data, index) {
+                onOpen: (data, index) => {
                     console.log('Menu Opened!', 'element:', this, 'data:', data, 'index:', index);
                 },
-                onClose: function (data, index) {
+                onClose: (data, index) => {
                     console.log('Menu Closed!', 'element:', this, 'data:', data, 'index:', index);
                 }
             }));
 
         node
             .on('contextmenu', d3.contextMenu(menu_node, {
-                onOpen: function (data, index) {
+                onOpen: (data, index) => {
                     console.log('Menu Opened!', 'element:', this, 'data:', data, 'index:', index);
                 },
-                onClose: function (data, index) {
+                onClose: (data, index) => {
                     console.log('Menu Closed!', 'element:', this, 'data:', data, 'index:', index);
                 }
             }));
 
         link
             .on('contextmenu', d3.contextMenu(menu_link, {
-                onOpen: function (data, index) {
+                onOpen: (data, index) => {
                     console.log('Menu Opened!', 'element:', this, 'data:', data, 'index:', index);
                 },
-                onClose: function (data, index) {
+                onClose: (data, index) => {
                     console.log('Menu Closed!', 'element:', this, 'data:', data, 'index:', index);
                 }
             }));
-
     </script>
 </body>
 

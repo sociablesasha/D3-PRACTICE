@@ -19,14 +19,14 @@
 <body>
     <script>
         var dataSet = [5, 10, 15, 20, 25];
-        
+
         d3.select("body").selectAll()
             .data(dataSet)
             .enter()
             .append("div")
             .attr("class", "bar")
-            .style("height", function(d) {
-                var barHeight = d * 5;  //Scale up by factor of 5
+            .style("height", function (d) {
+                var barHeight = d * 5; //Scale up by factor of 5
                 return barHeight + "px";
             });
     </script>

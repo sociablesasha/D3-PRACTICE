@@ -21,7 +21,7 @@
             .enter()
             .append("p")
             .text("New P")
-            .style("color", function (d) {
+            .style("color", (d) => {
                 if (d > 15) {
                     return "red";
                 } else {

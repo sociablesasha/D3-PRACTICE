@@ -33,8 +33,7 @@ var links = null;
 /**
  * @var Menu
  */
-var menu_svg = [
-    {
+var menu_svg = [{
         title: 'MAP',
     },
     {
@@ -42,21 +41,21 @@ var menu_svg = [
     },
     {
         title: '새로운 맵 생성...',
-        action: function (data, index) {
+        action: (data, index) => {
             console.log('Item clicked', 'element:', this, 'data:', data, 'index:', index);
             alert('준비 중입니다.');
         }
     },
     {
         title: '새로운 서브맵 생성...',
-        action: function (data, index) {
+        action: (data, index) => {
             console.log('Item clicked', 'element:', this, 'data:', data, 'index:', index);
             alert('준비 중입니다.');
         }
     },
     {
         title: '맵 수정...',
-        action: function (data, index) {
+        action: (data, index) => {
             var background = prompt("Background URL");
             $("#topology").css("background-image", "url('" + background + "')");
             test = $("#topology");
@@ -65,21 +64,21 @@ var menu_svg = [
     },
     {
         title: '맵 삭제...',
-        action: function (data, index) {
+        action: (data, index) => {
             console.log('Item clicked', 'element:', this, 'data:', data, 'index:', index);
             alert('준비 중입니다.');
         }
     },
     {
         title: '맵 저장...',
-        action: function (data, index) {
+        action: (data, index) => {
             alert('로그를 확인해주세요!');
             var topologyJSON = new Object;
             topologyJSON.nodes = nodes;
 
             // Reverse Sort Links
             var linksArray = [];
-            links.forEach(function (l) {
+            links.forEach((l) => {
                 var linkArray = new Object;
                 linkArray.source = l.source.id;
                 linkArray.value = l.value;
@@ -97,10 +96,8 @@ var menu_svg = [
                     type: 'post',
                     data: jsonData,
                     dataType: "json",
-                    success: function (event) {
-                    },
-                    error: function (event) {
-                    }
+                    success: (event) => {},
+                    error: (event) => {}
                 });
             }
             console.log(storeTest);
@@ -108,7 +105,7 @@ var menu_svg = [
     },
     {
         title: '맵 리프레쉬...',
-        action: function (data, index) {
+        action: (data, index) => {
             defaultSetting();
         }
     },
@@ -117,32 +114,31 @@ var menu_svg = [
     },
     {
         title: '새로운 자원 추가...',
-        action: function (data, index) {
+        action: (data, index) => {
             addingNode();
         }
     },
     {
         title: '자원 전체 삭제...',
-        action: function (data, index) {
+        action: (data, index) => {
             removingNodeAll();
         }
     },
     {
         title: '새로운 연결 추가...',
-        action: function (data, index) {
+        action: (data, index) => {
             console.log('Item clicked', 'element:', this, 'data:', data, 'index:', index);
             addingLine();
         }
     },
     {
         title: '연결 전체 삭제...',
-        action: function (data, index) {
+        action: (data, index) => {
             removingLinkAll();
         }
     }
 ];
-var menu_node = [
-    {
+var menu_node = [{
         title: 'Node',
     },
     {
@@ -150,26 +146,26 @@ var menu_node = [
     },
     {
         title: '새로운 자원 추가...',
-        action: function (data, index) {
+        action: (data, index) => {
             addingNode();
         }
     },
     {
         title: '자원 수정...',
-        action: function (data, index) {
+        action: (data, index) => {
             console.log('Item clicked', 'element:', this, 'data:', data, 'index:', index);
             alert('준비 중입니다.');
         }
     },
     {
         title: '자원 삭제...',
-        action: function (data, index) {
+        action: (data, index) => {
             removingNode(data);
         }
     },
     {
         title: '자원 전체 삭제...',
-        action: function (data, index) {
+        action: (data, index) => {
             removingNodeAll();
         }
     },
@@ -178,26 +174,25 @@ var menu_node = [
     },
     {
         title: '새로운 연결 추가...',
-        action: function (data, index) {
+        action: (data, index) => {
             console.log('Item clicked', 'element:', this, 'data:', data, 'index:', index);
             addingLine();
         }
     },
     {
         title: '연결 삭제...',
-        action: function (data, index) {
+        action: (data, index) => {
             removingLinkWithNode(data);
         }
     },
     {
         title: '연결 전체 삭제...',
-        action: function (data, index) {
+        action: (data, index) => {
             removingLinkAll();
         }
     }
 ];
-var menu_link = [
-    {
+var menu_link = [{
         title: 'Link',
     },
     {
@@ -205,20 +200,20 @@ var menu_link = [
     },
     {
         title: '새로운 연결 추가...',
-        action: function (data, index) {
+        action: (data, index) => {
             console.log('Item clicked', 'element:', this, 'data:', data, 'index:', index);
             alert('준비 중입니다.');
         }
     },
     {
         title: '연결 삭제...',
-        action: function (data, index) {
+        action: (data, index) => {
             removingLink(data);
         }
     },
     {
         title: '연결 전체 삭제...',
-        action: function (data, index) {
+        action: (data, index) => {
             removingLinkAll();
         }
     }
@@ -237,11 +232,13 @@ function defaultSetting() {
         .attr("width", width)
         .attr("height", height)
         .on('contextmenu', d3.contextMenu(menu_svg, {
-            onOpen: function (data, index) { resetOptions(); },
-            onClose: function (data, index) { }
+            onOpen: (data, index) => {
+                resetOptions();
+            },
+            onClose: (data, index) => {}
         }));
     // Get JSON Object
-    d3.json("./Topology.json", function (error, graph) {
+    d3.json("./Topology.json", (error, graph) => {
         // Define Node Map
         var nodeMap = {};
 
@@ -250,7 +247,7 @@ function defaultSetting() {
         var warning = false;
 
         // Rearrangement
-        graph.nodes.forEach(function (d) {
+        graph.nodes.forEach((d) => {
             if (d.icon.indexOf("danger") != -1) {
                 danger = true;
             } else if (d.icon.indexOf("warning") != -1) {
@@ -258,11 +255,17 @@ function defaultSetting() {
             }
             nodeMap[d.id] = d;
         });
-        graph.links.forEach(function (l) {
-            if (typeof nodeMap[l.target] === 'undefined') { console.log("l.target undefined id=" + l.target.name); }
-            else { l.target = nodeMap[l.target]; }
-            if (typeof nodeMap[l.source] === 'undefined') { console.log("l.source undefined id=" + l.source.name); }
-            else { l.source = nodeMap[l.source]; }
+        graph.links.forEach((l) => {
+            if (typeof nodeMap[l.target] === 'undefined') {
+                console.log("l.target undefined id=" + l.target.name);
+            } else {
+                l.target = nodeMap[l.target];
+            }
+            if (typeof nodeMap[l.source] === 'undefined') {
+                console.log("l.source undefined id=" + l.source.name);
+            } else {
+                l.source = nodeMap[l.source];
+            }
         });
 
         // Sound Track
@@ -298,16 +301,18 @@ function managing(node) {
     svg.selectAll(".link").remove();
 
     // @FIXED Append -> Insert
-    $(links).each(function () {
+    $(links).each(() => {
         var d = this;
         svg
             .insert("path", ".node")
             .attr("class", "link")
             .on('contextmenu', d3.contextMenu(menu_link, {
-                onOpen: function (data, index) { resetOptions(); },
-                onClose: function (data, index) { }
+                onOpen: (data, index) => {
+                    resetOptions();
+                },
+                onClose: (data, index) => {}
             }))
-            .attr("d", function () {
+            .attr("d", () => {
                 var dx = d.target.x - d.source.x,
                     dy = d.target.y - d.source.y,
                     dr = Math.sqrt(dx * dx + dy * dy);
@@ -327,6 +332,7 @@ function addingNode() {
     svg.style("cursor", "copy")
     svg.on("click", addingNodeWithCursor);
 }
+
 function addingNodeWithCursor() {
     var node_x = d3.event.x;
     var node_y = d3.event.y;
@@ -334,9 +340,9 @@ function addingNodeWithCursor() {
     var node_object = prompt("object");
     var node_icon = prompt("icon");
     var node_id = Date.now();
-    if (node_name != null && node_object != null
-        && node_icon != null && node_id != null
-        && node_x != null && node_y != null) {
+    if (node_name != null && node_object != null &&
+        node_icon != null && node_id != null &&
+        node_x != null && node_y != null) {
         var data = {
             id: node_id,
             icon: node_icon,
@@ -352,14 +358,16 @@ function addingNodeWithCursor() {
             .enter().append("g")
             .attr("class", "node")
             .append("image")
-            .attr("transform", function (d) {
+            .attr("transform", (d) => {
                 return "translate(" + d.x + "," + d.y + ")";
             })
             .attr('x', -(30 / 2))
             .attr('y', -(30 / 2))
             .attr('width', 30)
             .attr('height', 30)
-            .attr("href", function (d) { return d.icon })
+            .attr("href", (d) => {
+                return d.icon
+            })
             .call(drag)
 
         nodesContent();
@@ -374,24 +382,29 @@ function addingNodeWithCursor() {
  * @function addingLine => Create with down, up
  */
 var down, up;
+
 function addingLineDown(node) {
     down = node;
 }
+
 function addingLineUp(node) {
     up = node;
     addingLine();
 }
+
 function addingLine() {
     node = svg.selectAll(".node");
     node
         .call(d3.behavior.drag()
-            .origin(function (d) { return d; })
+            .origin((d) => {
+                return d;
+            })
             .on("drag", null))
         .on("mousedown", addingLineDown)
         .on("mouseup", addingLineUp);
     if (down != up) {
         var temp = true;
-        links.forEach(function (link) {
+        links.forEach((link) => {
             if (link.source == down && link.target == up) {
                 temp = false;
             }
@@ -425,17 +438,18 @@ function removingNode(node) {
     nodes.splice(nodes.indexOf(node), 1);
     // Remove Link
     var temps = [];
-    links.forEach(function (link) {
-        if (node.id == link.source.id
-            || node.id == link.target.id) {
+    links.forEach((link) => {
+        if (node.id == link.source.id ||
+            node.id == link.target.id) {
             temps.push(link);
         }
     });
-    temps.forEach(function (temp) {
+    temps.forEach((temp) => {
         links.splice(links.indexOf(temp), 1);
     });
     drawing();
 }
+
 function removingNodeAll() {
     nodes.splice(0, nodes.length);
     links.splice(0, links.length);
@@ -455,19 +469,21 @@ function removingLink(link) {
     links.splice(links.indexOf(link), 1);
     drawing();
 }
+
 function removingLinkWithNode(node) {
     var temps = [];
-    links.forEach(function (link) {
-        if (node.id == link.source.id
-            || node.id == link.target.id) {
+    links.forEach((link) => {
+        if (node.id == link.source.id ||
+            node.id == link.target.id) {
             temps.push(link);
         }
     });
-    temps.forEach(function (temp) {
+    temps.forEach((temp) => {
         links.splice(links.indexOf(temp), 1);
     });
     drawing();
 }
+
 function removingLinkAll() {
     links.splice(0, links.length);
     drawing();
@@ -496,7 +512,9 @@ function drawing(options) {
     link = svg.selectAll(".link");
     node = svg.selectAll(".node");
     drag = d3.behavior.drag()
-        .origin(function (d) { return d; })
+        .origin((d) => {
+            return d;
+        })
         .on("drag", managing);
 
     link
@@ -504,10 +522,12 @@ function drawing(options) {
         .enter().append("path")
         .attr("class", "link")
         .on('contextmenu', d3.contextMenu(menu_link, {
-            onOpen: function (data, index) { resetOptions(); },
-            onClose: function (data, index) { }
+            onOpen: (data, index) => {
+                resetOptions();
+            },
+            onClose: (data, index) => {}
         }))
-        .attr("d", function (d) {
+        .attr("d", (d) => {
             var dx = d.target.x - d.source.x,
                 dy = d.target.y - d.source.y,
                 dr = Math.sqrt(dx * dx + dy * dy);
@@ -517,23 +537,27 @@ function drawing(options) {
     node
         .data(nodes)
         .enter().append("g")
-        .attr("id", function (d) {
+        .attr("id", (d) => {
             return d.id;
         })
         .attr("class", "node")
         .on('contextmenu', d3.contextMenu(menu_node, {
-            onOpen: function (data, index) { resetOptions(); },
-            onClose: function (data, index) { }
+            onOpen: (data, index) => {
+                resetOptions();
+            },
+            onClose: (data, index) => {}
         }))
         .append("image")
-        .attr("transform", function (d) {
+        .attr("transform", (d) => {
             return "translate(" + d.x + "," + d.y + ")";
         })
         .attr('x', -(30 / 2))
         .attr('y', -(30 / 2))
         .attr('width', 30)
         .attr('height', 30)
-        .attr("href", function (d) { return d.icon })
+        .attr("href", (d) => {
+            return d.icon
+        })
         .call(drag)
 
     nodesContent();
@@ -549,12 +573,12 @@ function drawing(options) {
  */
 function nodesContent() {
     $(".active-nodes").remove();
-    nodes.forEach(function (data) {
+    nodes.forEach((data) => {
         var node_clone = $("#template_node").clone();
         node_clone.attr("style", "display: block");
         node_clone.addClass("active-nodes");
         // @FIXED Accent in SVG, After Click.
-        node_clone.on("click", function () {
+        node_clone.on("click", () => {
             alert(data.id);
             $("#" + data.id).toggleClass("accent");
         });
@@ -573,7 +597,7 @@ function nodesContent() {
  */
 function linksContent() {
     $(".active-links").remove();
-    links.forEach(function (data) {
+    links.forEach((data) => {
         var link_clone = $("#template_link").clone();
         link_clone.attr("style", "display: block");
         link_clone.addClass("active-links");
@@ -594,7 +618,7 @@ function linksContent() {
  * @todo play the sound
  * @function soundPlay
  */
-function soundPlay (value) {
+function soundPlay(value) {
     document.getElementById(value).play();
 }
 
@@ -604,7 +628,7 @@ function soundPlay (value) {
  * @todo play the sound
  * @function soundStop
  */
-function soundStop (value) {
+function soundStop(value) {
     document.getElementById(value).pause();
 }
 
@@ -614,7 +638,7 @@ function soundStop (value) {
  * @todo load
  * @function loading
  */
-$(document).ready(function () {
+$(document).ready(() => {
     defaultSetting();
     interval = setInterval(defaultSetting, 15000);
-}); 
+});
